@@ -1,0 +1,30 @@
+<h2>Create Workflow</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <label>
+    Name
+    <input formControlName="name" />
+  </label>
+  <small *ngIf="form.get('name')?.errors?.['nameTaken']">
+    Name already exists
+  </small>
+
+  <label>
+    Priority
+    <select formControlName="priority">
+      <option>Low</option>
+      <option>Medium</option>
+      <option>High</option>
+    </select>
+  </label>
+
+  <label>
+    Due Date
+    <input type="date" formControlName="dueDate" />
+  </label>
+
+  <button type="submit" [disabled]="form.invalid">
+    Save
+  </button>
+</form>

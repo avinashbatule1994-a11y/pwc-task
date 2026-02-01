@@ -1,7 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/core/auth/auth.service';
-import { User } from 'src/app/models/user.model';
+import { WorkflowService } from '../../services/workflow.service';
 
 @Component({
   selector: 'app-workflow-list',
@@ -11,13 +9,15 @@ import { User } from 'src/app/models/user.model';
 })
 export class WorkflowListComponent {
 
-  user$: Observable<User | null>;
+  workflows$ = this.workflowService.workflows$;
 
-  constructor(public auth: AuthService) {
-    this.user$ = this.auth.user$;
+  constructor(private workflowService: WorkflowService) {}
+
+  trackById(_: number, item: any) {
+    return item.id;
   }
 
-  deleteWorkflow() {
-    alert('Workflow deleted');
+  delete(id: number) {
+    this.workflowService.delete(id);
   }
 }

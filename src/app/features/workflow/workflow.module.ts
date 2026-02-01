@@ -1,21 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
+import { SharedModule } from '../../shared/shared.module';
 import { WorkflowRoutingModule } from './workflow-routing.module';
-import { WorkflowListComponent } from './pages/workflow-list/workflow-list.component';
-import { ApproveWorkflowComponent } from './pages/approve-workflow/approve-workflow.component';
-import { SharedModule } from 'src/app/shared/shared.module';
 
+import { WorkflowListComponent } from './pages/workflow-list/workflow-list.component';
+import { WorkflowFormComponent } from './pages/workflow-form/workflow-form.component';
+import { ApproveWorkflowComponent } from './pages/approve-workflow/approve-workflow.component';
 
 @NgModule({
   declarations: [
     WorkflowListComponent,
-    ApproveWorkflowComponent
+    WorkflowFormComponent,
+    ApproveWorkflowComponent,
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     SharedModule,
-    WorkflowRoutingModule
+    WorkflowRoutingModule,
+    
+    
   ]
 })
-export class WorkflowModule { }
+export class WorkflowModule {}

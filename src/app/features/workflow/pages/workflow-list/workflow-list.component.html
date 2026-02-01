@@ -1,11 +1,11 @@
-<h2>Workflow List</h2>
+<!-- <h2>Workflow List</h2>
 
 <ul>
   <li>Workflow A</li>
   <li>Workflow B</li>
 </ul>
 <app-status-badge status="Approved"></app-status-badge>
-<!-- ROLE-BASED UI -->
+
 <button
   *ngIf="(user$ | async)?.role === 'ADMIN'"
   (click)="deleteWorkflow()">
@@ -16,4 +16,15 @@
 
 <a routerLink="/workflows/approve">
   Go to Approval Page
-</a>
+</a> -->
+<h2>Workflows</h2>
+
+<app-table
+  [columns]="['name', 'priority', 'status', 'dueDate']"
+  [data]="(workflows$ | async)!"
+  [trackByFn]="trackById">
+</app-table>
+
+<a routerLink="/workflows/create">Create Workflow</a>
+<a routerLink="/workflows/approve">Approve Workflows</a>
+
