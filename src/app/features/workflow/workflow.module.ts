@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { WorkflowRoutingModule } from './workflow-routing.module';
 import { WorkflowListComponent } from './pages/workflow-list/workflow-list.component';
 import { ApproveWorkflowComponent } from './pages/approve-workflow/approve-workflow.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { ApproveWorkflowComponent } from './pages/approve-workflow/approve-workf
   ],
   imports: [
     CommonModule,
+    SharedModule,
     WorkflowRoutingModule
   ]
 })

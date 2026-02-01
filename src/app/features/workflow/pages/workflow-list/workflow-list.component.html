@@ -4,7 +4,7 @@
   <li>Workflow A</li>
   <li>Workflow B</li>
 </ul>
-
+<app-status-badge status="Approved"></app-status-badge>
 <!-- ROLE-BASED UI -->
 <button
   *ngIf="(user$ | async)?.role === 'ADMIN'"
