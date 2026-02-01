@@ -1,0 +1,19 @@
+<h2>Workflow List</h2>
+
+<ul>
+  <li>Workflow A</li>
+  <li>Workflow B</li>
+</ul>
+
+<!-- ROLE-BASED UI -->
+<button
+  *ngIf="(user$ | async)?.role === 'ADMIN'"
+  (click)="deleteWorkflow()">
+  Delete Workflow
+</button>
+
+<br /><br />
+
+<a routerLink="/workflows/approve">
+  Go to Approval Page
+</a>
