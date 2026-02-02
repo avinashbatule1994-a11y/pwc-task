@@ -6,7 +6,8 @@ import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls:['./login.component.scss']
 })
 export class LoginComponent {
 
@@ -20,43 +21,25 @@ export class LoginComponent {
     private userService: UserService,
     private auth: AuthService,
     private router: Router
-  ) {}
-
-  // login() {
-  //   this.userService.getUsers().subscribe(users => {
-  //     const user = users.find(
-  //       u =>
-  //         u.email === this.form.value.email &&
-  //         u.password === this.form.value.password
-  //     );
-
-  //     if (!user) {
-  //       alert('Invalid credentials');
-  //       return;
-  //     }
-
-  //     this.auth.login(user);
-  //     this.router.navigate(['/dashboard']);
-  //   });
-  // }
+  ) { }
   login() {
-  if (this.form.invalid) return;
-console.log('form submitted')
-  this.userService.getUsers().subscribe(users => {
-    const user = users.find(
-      u =>
-        u.email === this.form.value.email &&
-        u.password === this.form.value.password
-    );
+    if (this.form.invalid) return;
+    console.log('form submitted')
+    this.userService.getUsers().subscribe(users => {
+      const user = users.find(
+        u =>
+          u.email === this.form.value.email &&
+          u.password === this.form.value.password
+      );
 
-    if (!user) {
-      alert('Invalid credentials');
-      return;
-    }
+      if (!user) {
+        alert('Invalid credentials');
+        return;
+      }
 
-    this.auth.login(user);
-    this.router.navigate(['/dashboard']);
-  });
-}
+      this.auth.login(user);
+      this.router.navigate(['/dashboard']);
+    });
+  }
 
 }

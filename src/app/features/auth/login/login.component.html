@@ -1,48 +1,51 @@
-<p>login works!</p>
-<section class="login-container">
-  <h2>Login</h2>
+<mat-card class="login-card">
+  <mat-card-title>Login</mat-card-title>
 
-  <form [formGroup]="form" (ngSubmit)="login()" novalidate>
+  <form [formGroup]="form" (ngSubmit)="login()">
 
     <!-- Email -->
-    <div class="form-group">
-      <label for="email">Email</label>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
       <input
-        id="email"
+        matInput
         type="email"
         formControlName="email"
-        placeholder="admin@test.com"
-      />
+        placeholder="admin@test.com" />
 
-      <small class="error"
-        *ngIf="form.controls.email.touched && form.controls.email.invalid">
+      <mat-error *ngIf="form.controls.email.hasError('required')">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="form.controls.email.hasError('email')">
         Enter a valid email
-      </small>
-    </div>
+      </mat-error>
+    </mat-form-field>
 
     <!-- Password -->
-    <div class="form-group">
-      <label for="password">Password</label>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Password</mat-label>
       <input
-        id="password"
+        matInput
         type="password"
         formControlName="password"
-        placeholder="******"
-      />
+        placeholder="******" />
 
-      <small class="error"
-        *ngIf="form.controls.password.touched && form.controls.password.invalid">
+      <mat-error *ngIf="form.controls.password.hasError('required')">
         Password is required
-      </small>
-    </div>
+      </mat-error>
+    </mat-form-field>
 
     <!-- Submit -->
-    <button type="submit" [disabled]="form.invalid">
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid">
       Login
     </button>
 
   </form>
-
+</mat-card>
+<section>
   <!-- Helper info (optional, good for demo) -->
   <div class="hint">
     <p><strong>Demo users:</strong></p>

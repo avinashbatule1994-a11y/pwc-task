@@ -3,12 +3,16 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   providers: [
     AuthService,
     AuthGuard,
     RoleGuard
+  ],
+  declarations: [
+    ToolbarComponent
   ]
 })
 export class CoreModule {

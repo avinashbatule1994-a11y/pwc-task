@@ -1,0 +1,85 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #648ac2, #e4e8f0);
+  padding-top: 60px;
+}
+ input{
+    padding: 15px;
+ }
+/* Login card */
+.login-card {
+  width: 380px;
+  margin: 0 auto;
+  padding: 24px 28px;
+  border-radius: 12px;
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.08),
+    0 4px 10px rgba(0, 0, 0, 0.05);
+
+  mat-card-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+}
+
+/* Form layout */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+/* Button */
+button[mat-raised-button] {
+  height: 44px;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+/* Helper / demo users section */
+section {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.hint {
+  width: 380px;
+  background: #c1bdbd;
+  border-radius: 10px;
+  padding: 16px 20px;
+  font-size: 13px;
+  color: #444;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+
+  p {
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 18px;
+
+    li {
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 420px) {
+  .login-card,
+  .hint {
+    width: 92%;
+  }
+}

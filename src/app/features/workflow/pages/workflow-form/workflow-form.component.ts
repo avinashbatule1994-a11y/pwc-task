@@ -86,19 +86,36 @@ form = this.fb.group({
   private workflowService: WorkflowService
 ) {}
 
+// submit() {
+//   if (this.form.invalid) return;
+
+//   const value = this.form.getRawValue();
+// console.log("workflow created",value)
+//   const workflow: Workflow = {
+//     id: Date.now(),
+//     name: value.name,
+//     priority: value.priority,
+//     dueDate: new Date(value.dueDate),
+//     assignedUsers: value.assignedUsers, // ✅ always string[]
+//     status: 'Draft',
+//     createdAt: new Date()
+//   };
+
+//   this.workflowService.create(workflow);
+// }
 submit() {
   if (this.form.invalid) return;
 
-  const value = this.form.getRawValue();
-console.log("workflow created",value)
+  const value = this.form.value;
+
   const workflow: Workflow = {
     id: Date.now(),
-    name: value.name,
-    priority: value.priority,
-    dueDate: new Date(value.dueDate),
-    assignedUsers: value.assignedUsers, // ✅ always string[]
+    name: value.name!,
+    priority: value.priority!,
     status: 'Draft',
-    createdAt: new Date()
+    dueDate: new Date(value.dueDate!).toISOString(),
+    createdAt: new Date().toISOString(),
+    assignedUsers: value.assignedUsers ?? []
   };
 
   this.workflowService.create(workflow);

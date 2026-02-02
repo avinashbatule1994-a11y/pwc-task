@@ -1,58 +1,70 @@
+// // import { Component, ChangeDetectionStrategy } from '@angular/core';
+// // import { WorkflowService } from '../../services/workflow.service';
+// // import { Workflow } from '../../models/workflow.model';
+
+// // @Component({
+// //   selector: 'app-approve-workflow',
+// //   templateUrl: './approve-workflow.component.html',
+// //   changeDetection: ChangeDetectionStrategy.OnPush
+// // })
+// // export class ApproveWorkflowComponent {
+
+// //   workflows$ = this.workflowService.workflows$;
+
+// //   constructor(private workflowService: WorkflowService) {}
+
+// //   approve(workflow: Workflow) {
+// //     this.workflowService.approve(workflow.id);
+// //   }
+
+// //   reject(workflow: Workflow) {
+// //     this.workflowService.reject(workflow.id);
+// //   }
+// // }
 // import { Component, ChangeDetectionStrategy } from '@angular/core';
+// import { WorkflowService } from '../../services/workflow.service';
 
 // @Component({
 //   selector: 'app-approve-workflow',
 //   templateUrl: './approve-workflow.component.html',
-//   styleUrls: ['./approve-workflow.component.scss'],
 //   changeDetection: ChangeDetectionStrategy.OnPush
 // })
 // export class ApproveWorkflowComponent {
+//   workflows$ = this.workflowService.workflows$;
 
-//   approve() {
-//     alert('Workflow Approved');
+//   constructor(private workflowService: WorkflowService) {}
+
+//   approve(id: number) {
+//     this.workflowService.approve(id);
 //   }
 
-//   reject() {
-//     alert('Workflow Rejected');
+//   reject(id: number) {
+//     this.workflowService.reject(id);
 //   }
 // }
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { WorkflowService } from '../../services/workflow.service';
 import { Workflow } from '../../models/workflow.model';
-import { AuthService } from 'src/app/core/auth/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-approve-workflow',
-  templateUrl: './approve-workflow.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './approve-workflow.component.html'
 })
 export class ApproveWorkflowComponent {
 
-  workflows$ = this.workflowService.workflows$;
+  workflows$: Observable<Workflow[]> =
+    this.workflowService.workflows$;
 
-  constructor(
-    private workflowService: WorkflowService,
-    private auth: AuthService
-  ) {}
+  displayedColumns: string[] = ['name', 'status', 'actions'];
 
-  approve(workflow: Workflow) {
-    const user = this.auth.currentUser;
+  constructor(private workflowService: WorkflowService) {}
 
-    if (!user || !['ADMIN', 'MANAGER'].includes(user.role)) {
-      alert('Not authorized');
-      return;
-    }
-
-    this.workflowService.update({
-      ...workflow,
-      status: 'Approved'
-    });
+  approve(id: number) {
+    this.workflowService.approve(id);
   }
 
-  reject(workflow: Workflow) {
-    this.workflowService.update({
-      ...workflow,
-      status: 'Rejected'
-    });
+  reject(id: number) {
+    this.workflowService.reject(id);
   }
 }

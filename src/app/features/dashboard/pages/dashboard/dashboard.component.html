@@ -1,4 +1,4 @@
-<h2>Workflow Dashboard</h2>
+<!-- <h2>Workflow Dashboard</h2>
 
 <section class="kpis">
   <div class="card">
@@ -22,4 +22,53 @@
   </app-chart>
 </ng-container>
 
-</section>
+</section> -->
+<h2 class="page-title">Workflow Dashboard</h2>
+
+<!-- KPI CARDS -->
+<div class="kpi-grid">
+
+  <mat-card class="kpi-card">
+    <mat-card-title>Avg Completion Time</mat-card-title>
+    <mat-card-content>
+      <h1>
+        {{ avgCompletionTime$ | async }}
+        <span>days</span>
+      </h1>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="kpi-card overdue">
+    <mat-card-title>Overdue Workflows</mat-card-title>
+    <mat-card-content>
+      <h1>{{ overdueCount$ | async }}</h1>
+    </mat-card-content>
+  </mat-card>
+
+</div>
+
+<!-- STATUS TABLE -->
+<mat-card class="table-card">
+  <mat-card-title>Status Breakdown</mat-card-title>
+
+  <table
+    mat-table
+    [dataSource]="(statusData$ | async) ?? []"
+    class="mat-elevation-z1">
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="count">
+      <th mat-header-cell *matHeaderCellDef>Count</th>
+      <td mat-cell *matCellDef="let row">{{ row.count }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+  </table>
+</mat-card>
+

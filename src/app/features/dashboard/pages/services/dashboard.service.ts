@@ -1,3 +1,4 @@
+// import { Injectable } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { WorkflowService } from 'src/app/features/workflow/services/workflow.service';
@@ -7,37 +8,34 @@ export class DashboardService {
 
   workflows$ = this.workflowService.workflows$;
 
-  /** Status counts */
   statusCounts$ = this.workflows$.pipe(
     map(workflows =>
-      workflows.reduce((acc, w) => {
-        acc[w.status] = (acc[w.status] || 0) + 1;
+      workflows.reduce((acc, wf) => {
+        acc[wf.status] = (acc[wf.status] || 0) + 1;
         return acc;
       }, {} as Record<string, number>)
     )
   );
 
-  /** Overdue workflows */
   overdueWorkflows$ = this.workflows$.pipe(
     map(workflows =>
-      workflows.filter(w =>
-        new Date(w.dueDate) < new Date() &&
-        w.status !== 'Approved'
+      workflows.filter(
+        wf =>
+          new Date(wf.dueDate) < new Date() &&
+          wf.status !== 'Approved'
       )
     )
   );
 
-  /** Average completion time (days) */
   averageCompletionTime$ = this.workflows$.pipe(
     map(workflows => {
-      const completed = workflows.filter(w => w.status === 'Approved');
+      const completed = workflows.filter(w => w.completedAt);
       if (!completed.length) return 0;
 
-      const totalDays = completed.reduce((sum, w) => {
-        const diff =
-          (new Date(w.dueDate).getTime() -
-           new Date(w.createdAt).getTime()) / 86400000;
-        return sum + diff;
+      const totalDays = completed.reduce((sum, wf) => {
+        const created = new Date(wf.createdAt).getTime();
+        const completedAt = new Date(wf.completedAt!).getTime();
+        return sum + (completedAt - created) / (1000 * 60 * 60 * 24);
       }, 0);
 
       return Math.round(totalDays / completed.length);
