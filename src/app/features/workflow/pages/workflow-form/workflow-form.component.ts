@@ -53,16 +53,11 @@
 //   }
 // }
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import {
-  FormBuilder,
-  Validators,
-  AbstractControl,
-  AsyncValidatorFn,
-  NonNullableFormBuilder
-} from '@angular/forms';
+
 import { map } from 'rxjs/operators';
 import { WorkflowService } from '../../services/workflow.service';
 import { Workflow } from '../../models/workflow.model';
+import { AbstractControl, AsyncValidatorFn, NonNullableFormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-workflow-form',
@@ -91,28 +86,11 @@ form = this.fb.group({
   private workflowService: WorkflowService
 ) {}
 
-
-// submit() {
-//   if (this.form.invalid) return;
-
-//   const workflow: Workflow = {
-//     id: Date.now(),
-//     name: this.form.value.name,
-//     priority: this.form.value.priority,
-//     dueDate: new Date(this.form.value.dueDate),
-//     assignedUsers: this.form.value.assignedUsers,
-//     status: 'Draft',
-//     createdAt: new Date()
-//   };
-
-//   this.workflowService.create(workflow);
-// }
-
 submit() {
   if (this.form.invalid) return;
 
   const value = this.form.getRawValue();
-
+console.log("workflow created",value)
   const workflow: Workflow = {
     id: Date.now(),
     name: value.name,

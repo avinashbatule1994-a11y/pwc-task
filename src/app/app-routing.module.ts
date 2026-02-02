@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
+import { RouterModule, Routes } from '@angular/router';
 
 // const routes: Routes = [
 //   {
@@ -22,6 +22,19 @@ import { AuthGuard } from './core/guards/auth.guard';
 // ];
 const routes: Routes = [
   {
+    path: 'auth',
+    loadChildren: () =>
+      import('./features/auth/auth.module')
+        .then(m => m.AuthModule)
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./features/dashboard/dashboard.module')
+        .then(m => m.DashboardModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'workflows',
     loadChildren: () =>
       import('./features/workflow/workflow.module')
@@ -30,8 +43,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'workflows',
+    redirectTo: 'auth/login',
     pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: 'auth/login'
   }
 ];
 
@@ -39,4 +56,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
+
+

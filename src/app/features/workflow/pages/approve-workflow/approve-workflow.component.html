@@ -1,4 +1,23 @@
+
 <h2>Approve Workflows</h2>
 
-<button (click)="approve()">Approve</button>
-<button (click)="reject()">Reject</button>
+<table>
+  <tr *ngFor="let wf of workflows$ | async">
+    <td>{{ wf.name }}</td>
+    <td>{{ wf.status }}</td>
+
+    <td>
+      <button
+        *ngIf="wf.status === 'In Review'"
+        (click)="approve(wf)">
+        Approve
+      </button>
+
+      <button
+        *ngIf="wf.status === 'In Review'"
+        (click)="reject(wf)">
+        Reject
+      </button>
+    </td>
+  </tr>
+</table>

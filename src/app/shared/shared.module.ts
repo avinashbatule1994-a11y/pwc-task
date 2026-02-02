@@ -4,15 +4,19 @@ import { CommonModule } from '@angular/common';
 import { StatusBadgeComponent } from './components/status-badge/status-badge.component';
 import { RelativeDatePipe } from './pipes/relative-date.pipe';
 import { TableComponent } from './components/table/table.component';
+import { ChartComponent } from './components/chart/chart.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
     StatusBadgeComponent,
     RelativeDatePipe,
-    TableComponent
+    TableComponent,
+    ChartComponent
   ],
-  imports: [CommonModule],
+  imports: [CommonModule,NgChartsModule],
   exports: [
+    ChartComponent,
     CommonModule,
     StatusBadgeComponent,
     TableComponent,
