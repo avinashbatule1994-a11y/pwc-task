@@ -1,33 +1,18 @@
-<!-- <h2>Workflow Dashboard</h2>
 
-<section class="kpis">
-  <div class="card">
-    <h4>Average Completion Time</h4>
-    <p>{{ avgCompletionTime$ | async }} days</p>
-  </div>
-
-  <div class="card">
-    <h4>Overdue Workflows</h4>
-    <p>{{ overdueCount$ | async }}</p>
-  </div>
-</section>
-
-<section>
-  <h3>Status Breakdown</h3>
-
-<ng-container *ngIf="statusChartData$ | async as chartData">
-  <app-chart
-    [data]="chartData"
-    type="bar">
-  </app-chart>
-</ng-container>
-
-</section> -->
 <h2 class="page-title">Workflow Dashboard</h2>
 
-<!-- KPI CARDS -->
 <div class="kpi-grid">
 
+
+  <!-- OVERDUE -->
+  <mat-card class="kpi-card overdue">
+    <mat-card-title>Overdue Workflows</mat-card-title>
+    <mat-card-content>
+      <h1>{{ overdueCount$ | async }}</h1>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- AVG COMPLETION -->
   <mat-card class="kpi-card">
     <mat-card-title>Avg Completion Time</mat-card-title>
     <mat-card-content>
@@ -38,37 +23,29 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="kpi-card overdue">
-    <mat-card-title>Overdue Workflows</mat-card-title>
-    <mat-card-content>
-      <h1>{{ overdueCount$ | async }}</h1>
-    </mat-card-content>
+  <!-- STATUS BREAKDOWN -->
+  <mat-card class="kpi-card">
+    <mat-card-title>Status Breakdown</mat-card-title>
+
+    <div class="status-list">
+      <div class="status-item" *ngFor="let row of (statusData$ | async) ?? []">
+        <span class="label">{{ row.status }}</span>
+        <span class="count">{{ row.count }}</span>
+      </div>
+    </div>
   </mat-card>
 
+  <!-- PIE CHART -->
+  <mat-card class="span2 cards">
+    <mat-card-title>Status Distribution</mat-card-title>
+
+    <div class="chart-container">
+      <canvas
+        baseChart
+        [type]="'pie'"
+        [data]="(chartData$ | async) ?? emptyChartData"
+        [options]="chartOptions">
+      </canvas>
+    </div>
+  </mat-card>
 </div>
-
-<!-- STATUS TABLE -->
-<mat-card class="table-card">
-  <mat-card-title>Status Breakdown</mat-card-title>
-
-  <table
-    mat-table
-    [dataSource]="(statusData$ | async) ?? []"
-    class="mat-elevation-z1">
-
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef>Status</th>
-      <td mat-cell *matCellDef="let row">{{ row.status }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="count">
-      <th mat-header-cell *matHeaderCellDef>Count</th>
-      <td mat-cell *matCellDef="let row">{{ row.count }}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-  </table>
-</mat-card>
-

@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1,
+    "name": "Invoice Approval",
+    "status": "In Review",
+    "priority": "High",
+    "createdAt": "2026-01-10",
+    "dueDate": "2026-01-20",
+    "assignedUsers": ["manager@test.com"]
+  },
+  {
+    "id": 2,
+    "name": "Vendor Onboarding",
+    "status": "Approved",
+    "priority": "Medium",
+    "createdAt": "2026-01-05",
+    "completedAt": "2026-01-15",
+    "dueDate": "2026-01-20",
+    "assignedUsers": ["admin@test.com"]
+  },
+  {
+    "id": 3,
+    "name": "Employee Exit Process",
+    "status": "Draft",
+    "priority": "Low",
+    "createdAt": "2026-02-01",
+    "dueDate": "2026-02-10",
+    "assignedUsers": ["hr@test.com"]
+  },
+  {
+    "id": 4,
+    "name": "Budget Approval",
+    "status": "Rejected",
+    "priority": "High",
+    "createdAt": "2026-01-08",
+    "dueDate": "2026-01-18",
+    "assignedUsers": ["finance@test.com"]
+  }
+]

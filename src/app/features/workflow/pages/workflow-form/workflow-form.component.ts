@@ -52,6 +52,7 @@
 //       );
 //   }
 // }
+
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { map } from 'rxjs/operators';
@@ -86,38 +87,22 @@ form = this.fb.group({
   private workflowService: WorkflowService
 ) {}
 
-// submit() {
-//   if (this.form.invalid) return;
-
-//   const value = this.form.getRawValue();
-// console.log("workflow created",value)
-//   const workflow: Workflow = {
-//     id: Date.now(),
-//     name: value.name,
-//     priority: value.priority,
-//     dueDate: new Date(value.dueDate),
-//     assignedUsers: value.assignedUsers, // ✅ always string[]
-//     status: 'Draft',
-//     createdAt: new Date()
-//   };
-
-//   this.workflowService.create(workflow);
-// }
 submit() {
   if (this.form.invalid) return;
 
-  const value = this.form.value;
+  const value = this.form.getRawValue();
 
   const workflow: Workflow = {
     id: Date.now(),
-    name: value.name!,
-    priority: value.priority!,
+    name: value.name,
+    priority: value.priority,
+    dueDate: new Date(value.dueDate).toISOString(),   // ✅ FIX
+    assignedUsers: value.assignedUsers,
     status: 'Draft',
-    dueDate: new Date(value.dueDate!).toISOString(),
-    createdAt: new Date().toISOString(),
-    assignedUsers: value.assignedUsers ?? []
+    createdAt: new Date().toISOString()                // ✅ FIX
   };
 
+  console.log('workflow created', workflow);
   this.workflowService.create(workflow);
 }
 

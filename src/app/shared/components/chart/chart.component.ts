@@ -8,5 +8,5 @@ import { ChartData, ChartType } from 'chart.js';
 })
 export class ChartComponent {
   @Input() data!: ChartData;
-  @Input() type: ChartType = 'bar';
+  @Input() type: ChartType = 'pie';
 }

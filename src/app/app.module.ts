@@ -11,19 +11,16 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-  import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-export class SomeModule {}
+ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainLayoutComponent
   ],
-
   imports: [
-    BrowserAnimationsModule, // 🔥 REQUIRED
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
@@ -35,7 +32,7 @@ export class SomeModule {}
     MatIconModule,
     MatButtonModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
+

@@ -2,6 +2,9 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { WorkflowService } from 'src/app/features/workflow/services/workflow.service';
+import { DashboardStats } from '../../models/dashboard.model';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
@@ -42,5 +45,8 @@ export class DashboardService {
     })
   );
 
-  constructor(private workflowService: WorkflowService) {}
+    getStats(): Observable<DashboardStats> {
+        return this.http.get<DashboardStats>('/api/dashboard/stats');
+    }
+  constructor(private workflowService: WorkflowService, private http:HttpClient) {}
 }

@@ -9,12 +9,6 @@ import { AuthGuard } from 'src/app/core/guards/auth.guard';
 const routes: Routes = [
   { path: '', component: WorkflowListComponent },
   { path: 'create', component: WorkflowFormComponent },
-  // {
-  //   path: 'approve',
-  //   component: ApproveWorkflowComponent,
-  //   canActivate: [RoleGuard],
-  //   data: { roles: ['ADMIN,MANAGER'] }
-  // }
   {
   path: 'approve',
   component: ApproveWorkflowComponent,

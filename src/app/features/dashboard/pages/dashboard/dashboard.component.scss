@@ -1,50 +1,76 @@
-.page-title {
-  margin-bottom: 24px;
-  font-weight: 600;
-}
-
-/* KPI SECTION */
+/* GRID LAYOUT */
 .kpi-grid {
+
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
 }
-
 .kpi-card {
-  text-align: center;
+  height: 100%;
 }
 
+/* FULL WIDTH CARD */
+.span-full {
+  grid-column: span 3;
+  min-height: 280px;
+}
+
+/* KPI CARD STYLES */
 .kpi-card h1 {
   font-size: 32px;
-  margin: 0;
+  font-weight: 700;
 }
 
 .kpi-card span {
   font-size: 14px;
-  color: gray;
+  font-weight: 400;
+  margin-left: 4px;
 }
 
-.kpi-card.overdue {
-  border-left: 5px solid #f44336;
+/* STATUS LIST */
+.status-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
 }
 
-/* TABLE */
-.table-card {
-  margin-bottom: 24px;
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
 }
 
-table {
-  width: 100%;
+/* TABLET */
+@media (max-width: 1024px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .span-full {
+    grid-column: span 2;
+  }
 }
 
-/* EDIT SECTION */
-.edit-card {
-  margin-top: 16px;
-}
+/* MOBILE */
+@media (max-width: 640px) {
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
 
-.edit-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
+  .span-full {
+    grid-column: span 1;
+  }
+}
+.chart-container {
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.empty {
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  margin-top: 40px;
 }

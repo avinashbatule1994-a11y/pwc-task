@@ -10,10 +10,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [DashboardComponent],
   imports: [
+    NgChartsModule, 
     CommonModule,
     MatCardModule,
     MatTableModule,
