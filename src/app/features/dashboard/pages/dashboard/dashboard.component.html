@@ -1,0 +1,51 @@
+
+<h2 class="page-title">Workflow Dashboard</h2>
+
+<div class="kpi-grid">
+
+
+  <!-- OVERDUE -->
+  <mat-card class="kpi-card overdue">
+    <mat-card-title>Overdue Workflows</mat-card-title>
+    <mat-card-content>
+      <h1>{{ overdueCount$ | async }}</h1>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- AVG COMPLETION -->
+  <mat-card class="kpi-card">
+    <mat-card-title>Avg Completion Time</mat-card-title>
+    <mat-card-content>
+      <h1>
+        {{ avgCompletionTime$ | async }}
+        <span>days</span>
+      </h1>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- STATUS BREAKDOWN -->
+  <mat-card class="kpi-card">
+    <mat-card-title>Status Breakdown</mat-card-title>
+
+    <div class="status-list">
+      <div class="status-item" *ngFor="let row of (statusData$ | async) ?? []">
+        <span class="label">{{ row.status }}</span>
+        <span class="count">{{ row.count }}</span>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- PIE CHART -->
+  <mat-card class="span2 cards">
+    <mat-card-title>Status Distribution</mat-card-title>
+
+    <div class="chart-container">
+      <canvas
+        baseChart
+        [type]="'pie'"
+        [data]="(chartData$ | async) ?? emptyChartData"
+        [options]="chartOptions">
+      </canvas>
+    </div>
+  </mat-card>
+</div>

@@ -1,0 +1,58 @@
+<mat-card class="login-card">
+  <mat-card-title>Login</mat-card-title>
+
+  <form [formGroup]="form" (ngSubmit)="login()">
+
+    <!-- Email -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="email"
+        formControlName="email"
+        placeholder="admin@test.com" />
+
+      <mat-error *ngIf="form.controls.email.hasError('required')">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="form.controls.email.hasError('email')">
+        Enter a valid email
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Password -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        placeholder="******" />
+
+      <mat-error *ngIf="form.controls.password.hasError('required')">
+        Password is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Submit -->
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid">
+      Login
+    </button>
+
+  </form>
+</mat-card>
+<section>
+  <!-- Helper info (optional, good for demo) -->
+  <div class="hint">
+    <p><strong>Demo users:</strong></p>
+    <ul>
+      <li>admin@test.com / admin123 (ADMIN)</li>
+      <li>manager@test.com / manager123 (MANAGER)</li>
+      <li>user@test.com / user123 (USER)</li>
+    </ul>
+  </div>
+</section>

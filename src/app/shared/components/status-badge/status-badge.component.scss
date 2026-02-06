@@ -1,0 +1,10 @@
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.Draft { background: gray; }
+.In\ Review { background: orange; }
+.Approved { background: green; color: white; }
+.Rejected { background: red; color: white; }

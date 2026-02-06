@@ -1,0 +1,16 @@
+<mat-toolbar color="primary" class="toolbar">
+  <span class="spacer"></span>
+
+  <ng-container *ngIf="user$ | async as user; else guest">
+    {{ user.email }} ({{ user.name }})
+  </ng-container>
+
+  <ng-template #guest>
+    Guest
+  </ng-template>
+
+  <span class="spacer"></span>
+
+  <button mat-button>Theme</button>
+  <button mat-button (click)="logout()">Logout</button>
+</mat-toolbar>
