@@ -1,4 +1,19 @@
-/* Full height layout */
+
 .container {
   height: 100vh;
+}
+
+.content {
+  padding: 20px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+mat-nav-list a {
+  font-weight: 500;
+}
+
+mat-icon {
+  font-size: 22px;
 }

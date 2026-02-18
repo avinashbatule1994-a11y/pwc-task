@@ -17,6 +17,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select'
+import { HttpClientModule } from '@angular/common/http';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
     WorkflowListComponent,
@@ -24,6 +28,10 @@ import { MatSelectModule } from '@angular/material/select'
     ApproveWorkflowComponent,
   ],
   imports: [
+    MatIconModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
     MatTableModule,
     MatChipsModule,
     CommonModule,
@@ -31,16 +39,13 @@ import { MatSelectModule } from '@angular/material/select'
     ReactiveFormsModule,
     SharedModule,
     WorkflowRoutingModule,
-
+    HttpClientModule,
     MatSidenavModule,
     MatToolbarModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule
-
-
-
   ]
 })
 export class WorkflowModule { }

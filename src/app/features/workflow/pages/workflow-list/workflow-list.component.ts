@@ -1,35 +1,15 @@
-// import { Component, ChangeDetectionStrategy } from '@angular/core';
-// import { WorkflowService } from '../../services/workflow.service';
 
-// @Component({
-//   selector: 'app-workflow-list',
-//   templateUrl: './workflow-list.component.html',
-//   styleUrls: ['./workflow-list.component.scss'],
-//   changeDetection: ChangeDetectionStrategy.OnPush
-// })
-// export class WorkflowListComponent {
-
-//   workflows$ = this.workflowService.workflows$;
-
-//   constructor(private workflowService: WorkflowService) {}
-
-//   trackById(_: number, item: any) {
-//     return item.id;
-//   }
-
-//   delete(id: number) {
-//     this.workflowService.delete(id);
-//   }
-// }
 import { Component } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { BehaviorSubject, combineLatest, map } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
+import { Workflow } from '../../models/workflow.model';
+import { WorkflowService } from '../../services/workflow.service';
 
-export interface Workflow {
-  id: number;
-  name: string;
-  status: 'Draft' | 'In Review' | 'Approved' | 'Rejected';
-  priority: 'Low' | 'Medium' | 'High';
-  dueDate: string;
+interface PageQuery {
+  page: number;
+  pageSize: number;
+  search?: string;
+  status?: string;
 }
 
 @Component({
@@ -41,47 +21,88 @@ export class WorkflowListComponent {
 
   displayedColumns = ['name', 'status', 'priority', 'dueDate', 'actions'];
 
-  dataSource = new MatTableDataSource<Workflow>([
-    {
-      id: 1,
-      name: 'Vendor Onboarding',
-      status: 'In Review',
-      priority: 'Medium',
-      dueDate: '2026-02-05'
-    },
-    {
-      id: 2,
-      name: 'Purchase Approval',
-      status: 'Approved',
-      priority: 'High',
-      dueDate: '2026-02-01'
-    },
-    {
-      id: 3,
-      name: 'Security Review',
-      status: 'Draft',
-      priority: 'Medium',
-      dueDate: '2026-02-12'
-    },
-    {
-      id: 4,
-      name: 'Budget Reforecast',
-      status: 'Rejected',
-      priority: 'High',
-      dueDate: '2026-02-04'
-    }
-  ]);
+  /** Pagination + filter state (acts like backend query) */
+  private querySubject = new BehaviorSubject<PageQuery>({
+    page: 1,
+    pageSize: 5
+  });
 
-  applySearch(value: string) {
-    this.dataSource.filter = value.trim().toLowerCase();
+  query$ = this.querySubject.asObservable();
+
+  /** Total records (after filtering) */
+  total$ = combineLatest([
+    this.workflowService.workflows$,
+    this.query$
+  ]).pipe(
+    map(([list, query]) =>
+      this.applyFilters(list, query).length
+    )
+  );
+
+  /** Table data (filtered + paginated) */
+  workflows$ = combineLatest([
+    this.workflowService.workflows$,
+    this.query$
+  ]).pipe(
+    map(([list, query]) => {
+      const filtered = this.applyFilters(list, query);
+      const start = (query.page - 1) * query.pageSize;
+      return filtered.slice(start, start + query.pageSize);
+    })
+  );
+
+  constructor(private workflowService: WorkflowService) {}
+
+  /* ---------------- SEARCH ---------------- */
+
+  applySearch(value: string): void {
+    this.querySubject.next({
+      ...this.querySubject.value,
+      page: 1,
+      search: value.toLowerCase()
+    });
   }
 
+  /* ---------------- STATUS FILTER ---------------- */
 
-  filterStatus(status: string) {
-    this.dataSource.filterPredicate = (data) =>
-      status ? data.status === status : true;
+  filterStatus(status: string): void {
+    this.querySubject.next({
+      ...this.querySubject.value,
+      page: 1,
+      status: status || undefined
+    });
+  }
 
-    this.dataSource.filter = status;
+  /* ---------------- PAGINATION ---------------- */
+
+  pageChanged(event: PageEvent): void {
+    this.querySubject.next({
+      ...this.querySubject.value,
+      page: event.pageIndex + 1,
+      pageSize: event.pageSize
+    });
+  }
+
+  /* ---------------- ACTIONS ---------------- */
+
+  approve(row: Workflow) {
+    this.workflowService.approve(row.id);
+  }
+
+  reject(row: Workflow) {
+    this.workflowService.reject(row.id);
+  }
+
+  pending(row: Workflow) {
+    this.workflowService.pending(row.id);
+  }
+
+  draft(row: Workflow) {
+    this.workflowService.draft(row.id);
+  }
+
+  delete(row: Workflow) {
+    this.workflowService.delete(row.id);
   }
 
   create() {
@@ -92,11 +113,19 @@ export class WorkflowListComponent {
     alert(`Edit: ${row.name}`);
   }
 
-  delete(row: Workflow) {
-    alert(`Delete: ${row.name}`);
-  }
+  /* ---------------- HELPERS ---------------- */
 
-  approve(row: Workflow) {
-    alert(`Approve: ${row.name}`);
+  private applyFilters(list: Workflow[], query: PageQuery): Workflow[] {
+    return list.filter(w => {
+      const matchSearch = query.search
+        ? w.name.toLowerCase().includes(query.search)
+        : true;
+
+      const matchStatus = query.status
+        ? w.status === query.status
+        : true;
+
+      return matchSearch && matchStatus;
+    });
   }
 }

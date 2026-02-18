@@ -1,5 +1,5 @@
 
-<h2 class="page-title">Workflow Dashboard</h2>
+<!-- <h2 class="page-title">Workflow Dashboard</h2> -->
 
 <div class="kpi-grid">
 
@@ -36,10 +36,13 @@
   </mat-card>
 
   <!-- PIE CHART -->
-  <mat-card class="span2 cards">
+
+</div>
+<div class="chart-row">
+  <mat-card class="piechart-card">
     <mat-card-title>Status Distribution</mat-card-title>
 
-    <div class="chart-container">
+    <div class="chart-wrapper">
       <canvas
         baseChart
         [type]="'pie'"
@@ -47,5 +50,8 @@
         [options]="chartOptions">
       </canvas>
     </div>
+
   </mat-card>
 </div>
+
+

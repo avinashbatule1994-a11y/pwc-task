@@ -1,25 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class ThemeService {
-  private readonly key = 'wmd_theme';
-
-  init(): void {
-    const saved = localStorage.getItem(this.key);
-    if (saved === 'dark') this.setDark(true);
-  }
-
-  isDark(): boolean {
-    return document.body.classList.contains('wmd-dark');
-  }
 
   toggle(): void {
-    this.setDark(!this.isDark());
-  }
+    const themeLink = document.getElementById('app-theme') as HTMLLinkElement;
 
-  setDark(dark: boolean): void {
-    document.body.classList.toggle('wmd-dark', dark);
-    localStorage.setItem(this.key, dark ? 'dark' : 'light');
+    const isDark = themeLink.href.includes('pink-bluegrey');
+
+    themeLink.href = isDark
+      ? 'https://cdn.jsdelivr.net/npm/@angular/material@16/prebuilt-themes/indigo-pink.css'
+      : 'https://cdn.jsdelivr.net/npm/@angular/material@16/prebuilt-themes/pink-bluegrey.css';
   }
 }
-

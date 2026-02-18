@@ -1,15 +1,14 @@
+
 import {
   ChangeDetectionStrategy,
   Component,
   ViewChild
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { BreakpointObserver } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { map, shareReplay } from 'rxjs';
-
 import { AuthService } from '../../core/auth/auth.service';
-import { ThemeService } from 'src/app/core/theme/theme.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -27,26 +26,26 @@ export class MainLayoutComponent {
     map(u => u ? `${u.username} (${u.role})` : null)
   );
 
-  isMobile$ = this.breakpointObserver
-    .observe('(max-width: 800px)')
+
+
+  isMobile$ = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
-      shareReplay(1)
+      shareReplay()
     );
 
   constructor(
     public auth: AuthService,
     private router: Router,
-    private theme: ThemeService,
     private breakpointObserver: BreakpointObserver
-  ) {}
+  ) { }
 
   logout(): void {
     this.auth.logout();
     this.router.navigate(['/auth/login']);
   }
 
-  toggleTheme(): void {
-    this.theme.toggle();
+  toggleTheme() {
+    document.body.classList.toggle('dark-theme');
   }
 }

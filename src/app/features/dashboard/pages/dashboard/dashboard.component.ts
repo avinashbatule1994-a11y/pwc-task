@@ -55,6 +55,7 @@ export class DashboardComponent {
       legend: {
         position: 'bottom'
       }
+      
     }
   };
 

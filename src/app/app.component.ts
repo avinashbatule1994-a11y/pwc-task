@@ -9,7 +9,5 @@ import { ThemeService } from './core/theme/theme.service';
 })
 export class AppComponent {
   title = 'enterprise-management-platform';
-  constructor(theme: ThemeService) {
-    theme.init();
   }
-}
+
